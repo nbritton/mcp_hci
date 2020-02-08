@@ -1,0 +1,2 @@
+zfs create data/images;
+zfs set mountpoint=/var/lib/libvirt/images data/images;
