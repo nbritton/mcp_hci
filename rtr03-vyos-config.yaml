@@ -1,0 +1,95 @@
+# Vyos currently only supports two nodes in a cluster, so
+# rtr03 is only a warm standby node for disaster recovery.
+interfaces {
+    bonding bond1 {
+        address 10.0.0.3/24
+        description LAN
+        member {
+            interface eth0
+            interface eth2
+        }
+        mode active-backup
+        primary eth0
+    }
+    ethernet eth3 {
+        address dhcp
+    }
+    wireguard wg0 {
+        address 10.1.0.3/24
+        description "Wireguard VPN Service"
+        peer nbritton {
+            allowed-ips 10.0.0.0/8
+            persistent-keepalive 15
+            pubkey ****************
+        }
+        port 31459
+    }
+}
+nat {
+    source {
+        rule 100 {
+            outbound-interface eth3
+            source {
+                address 10.0.0.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
+    }
+}
+service {
+    lldp {
+        interface all {
+        }
+        management-address 10.0.0.3
+    }
+    ssh {
+        port 22
+    }
+}
+system {
+    config-management {
+        commit-revisions 100
+    }
+    console {
+        device ttyS0 {
+            speed 115200
+        }
+    }
+    domain-name exabit.io
+    host-name vyos
+    login {
+        user vyos {
+            authentication {
+                encrypted-password ****************
+                plaintext-password ****************
+            }
+            level admin
+        }
+    }
+    ntp {
+        allow-clients {
+            address 10.0.0.0/8
+        }
+        listen-address 10.0.0.3
+        server 0.us.pool.ntp.org {
+        }
+        server 1.us.pool.ntp.org {
+        }
+        server 2.us.pool.ntp.org {
+        }
+        server 3.us.pool.ntp.org {
+        }
+    }
+    syslog {
+        global {
+            facility all {
+                level info
+            }
+            facility protocols {
+                level debug
+            }
+        }
+    }
+}
