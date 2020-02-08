@@ -1,0 +1,132 @@
+cluster {
+    dead-interval 1100
+    group exabit.io {
+        auto-failback false
+        primary rtr01
+        secondary rtr02
+        service 10.0.0.254/24/bond1
+        service 192.168.0.2/24/eth3
+    }
+    interface bond1
+    keepalive-interval 500
+    mcast-group 239.1.0.254
+    monitor-dead-interval 1100
+    pre-shared-secret ****************
+}
+interfaces {
+    bonding bond1 {
+        address 10.0.0.2/24
+        description LAN
+        member {
+            interface eth0
+            interface eth2
+        }
+        mode active-backup
+        primary eth0
+    }
+    ethernet eth3 {
+        address dhcp
+    }
+    wireguard wg0 {
+        address 10.1.0.2/24
+        description "Wireguard VPN Service"
+        peer nbritton {
+            allowed-ips 10.0.0.0/8
+            persistent-keepalive 15
+            pubkey ****************
+        }
+        port 31459
+    }
+}
+nat {
+    source {
+        rule 100 {
+            outbound-interface eth3
+            source {
+                address 10.0.0.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
+    }
+}
+service {
+    dhcp-server {
+        shared-network-name exabit.io {
+            subnet 10.0.0.0/24 {
+                default-router 10.0.0.254
+                dns-server 8.8.8.8
+                dns-server 1.1.1.1
+                dns-server 8.8.4.4
+                dns-server 1.0.0.1
+                domain-name exabit.io
+                domain-search exabit.io
+                failover {
+                    local-address 10.0.0.2
+                    name dhcp-failover
+                    peer-address 10.0.0.1
+                    status secondary
+                }
+                lease 10800
+                ntp-server 10.0.0.1
+                ntp-server 10.0.0.2
+                ntp-server 10.0.0.3
+                range 1 {
+                    start 10.0.0.100
+                    stop 10.0.0.200
+                }
+            }
+        }
+    }
+    lldp {
+        interface all {
+        }
+        management-address 10.0.0.2
+    }
+    ssh {
+        port 22
+    }
+}
+system {
+    config-management {
+        commit-revisions 100
+    }
+    console {
+        device ttyS0 {
+            speed 115200
+        }
+    }
+    domain-name exabit.io
+    host-name rtr02
+    login {
+        user vyos {
+            authentication {
+                encrypted-password ****************
+                plaintext-password ****************
+            }
+            level admin
+        }
+    }
+    ntp {
+        allow-clients {
+            address 10.0.0.0/8
+        }
+        listen-address 10.0.0.2
+        server 0.us.pool.ntp.org {
+        }
+        server 1.us.pool.ntp.org {
+        }
+        server 2.us.pool.ntp.org {
+        }
+        server 3.us.pool.ntp.org {
+        }
+    }
+    syslog {
+        global {
+            facility all {
+                level info
+            }
+        }
+    }
+}
