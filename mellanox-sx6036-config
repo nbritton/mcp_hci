@@ -1,0 +1,114 @@
+##
+## Active saved database "vpi-profile"
+## Generated at 2020/02/08 20:30:14 +0000
+## Hostname: sx6036fx2-f0ceb6
+##
+
+##
+## Running-config temporary prefix mode setting
+##
+no cli default prefix-modes enable
+
+##
+## License keys
+##
+   license install ********
+
+##
+## Interface Split configuration
+##
+   interface ethernet 1/4 module-type qsfp-split-4 force
+   interface ethernet 1/5 module-type qsfp-split-4 force
+   interface ethernet 1/9 module-type qsfp-split-4 force
+   interface ethernet 1/10 module-type qsfp-split-4 force
+
+##
+## Port configuration
+##
+   port 1/2-1/4 type ethernet force
+   port 1/4-1/5 type ethernet force
+   port 1/5 type ethernet force
+   port 1/8-1/9 type ethernet force
+   port 1/9-1/10 type ethernet force
+   port 1/10-1/11 type ethernet force
+   port 1/13-1/36 type ethernet force
+
+##
+## Subnet Manager configuration
+##
+   ib fabric transceiver-info enable
+
+##
+## Interface Ethernet configuration
+##
+   interface ethernet 1/35 speed 1000 force
+   interface ethernet 1/36 speed 10000 force
+   interface ethernet 1/4/1-1/4/4 mtu 9216 force
+   interface ethernet 1/5/1-1/5/4 mtu 9216 force
+   interface ethernet 1/9/1-1/9/4 mtu 9216 force
+   interface ethernet 1/10/1-1/10/4 mtu 9216 force
+   interface ethernet 1/15 mtu 9216 force
+   interface ethernet 1/27 mtu 9216 force
+   interface ethernet 1/36 mtu 9216 force
+
+##
+## LLDP configuration
+##
+   lldp
+
+##
+## Other IP configuration
+##
+   hostname sx6036fx2-f0ceb6
+
+##
+## Local user account configuration
+##
+   username admin password 7 ********
+
+##
+## AAA remote server configuration
+##
+# ldap bind-password ********
+# radius-server key ********
+# tacacs-server key ********
+
+##
+## Network management configuration
+##
+# web proxy auth basic password ********
+no ntp server 0.us.pool.ntp.org disable
+   ntp server 0.us.pool.ntp.org keyID 0
+no ntp server 0.us.pool.ntp.org trusted-enable
+   ntp server 0.us.pool.ntp.org version 4
+no ntp server 1.us.pool.ntp.org disable
+   ntp server 1.us.pool.ntp.org keyID 0
+no ntp server 1.us.pool.ntp.org trusted-enable
+   ntp server 1.us.pool.ntp.org version 4
+no ntp server 2.us.pool.ntp.org disable
+   ntp server 2.us.pool.ntp.org keyID 0
+no ntp server 2.us.pool.ntp.org trusted-enable
+   ntp server 2.us.pool.ntp.org version 4
+no ntp server 3.us.pool.ntp.org disable
+   ntp server 3.us.pool.ntp.org keyID 0
+no ntp server 3.us.pool.ntp.org trusted-enable
+   ntp server 3.us.pool.ntp.org version 4
+
+##
+## X.509 certificates configuration
+##
+#
+# Certificate name system-self-signed, ID fa5bf38e7ae8bee6ab2ee2a26fe75b3af70822df
+# (public-cert config omitted since private-key config is hidden)
+
+
+##
+## IB nodename to GUID mapping
+##
+   ib smnode sx6036fx2-f0ceb6 create
+   ib smnode sx6036fx2-f0ceb6 enable
+   ib smnode sx6036fx2-f0ceb6 sm-priority 0
+##
+## Persistent prefix mode setting
+##
+cli default prefix-modes enable
