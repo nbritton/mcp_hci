@@ -1,0 +1,86 @@
+##
+## Active saved database "initial"
+## Generated at 2020/02/08 20:21:32 +0000
+## Hostname: sx6018fx2-f0b85e
+##
+
+##
+## Running-config temporary prefix mode setting
+##
+no cli default prefix-modes enable
+
+##
+## License keys
+##
+   license install ********
+
+##
+## Interface Split configuration
+##
+   interface ethernet 1/1 module-type qsfp-split-4 force
+   interface ethernet 1/17 module-type qsfp-split-4 force
+
+##
+## Interface Ethernet configuration
+##
+   interface ethernet 1/2 speed 1000 force
+
+##
+## LLDP configuration
+##
+   lldp
+
+##
+## Network interface configuration
+##
+   interface mgmt0 ip address 192.168.0.8 /24
+
+##
+## Other IP configuration
+##
+   hostname sx6018fx2-f0b85e
+
+##
+## Local user account configuration
+##
+   username admin password 7 ********
+
+##
+## AAA remote server configuration
+##
+# ldap bind-password ********
+# radius-server key ********
+# tacacs-server key ********
+
+##
+## Network management configuration
+##
+# web proxy auth basic password ********
+no ntp server 0.us.pool.ntp.org disable
+   ntp server 0.us.pool.ntp.org keyID 0
+no ntp server 0.us.pool.ntp.org trusted-enable
+   ntp server 0.us.pool.ntp.org version 4
+no ntp server 1.us.pool.ntp.org disable
+   ntp server 1.us.pool.ntp.org keyID 0
+no ntp server 1.us.pool.ntp.org trusted-enable
+   ntp server 1.us.pool.ntp.org version 4
+no ntp server 2.us.pool.ntp.org disable
+   ntp server 2.us.pool.ntp.org keyID 0
+no ntp server 2.us.pool.ntp.org trusted-enable
+   ntp server 2.us.pool.ntp.org version 4
+no ntp server 3.us.pool.ntp.org disable
+   ntp server 3.us.pool.ntp.org keyID 0
+no ntp server 3.us.pool.ntp.org trusted-enable
+   ntp server 3.us.pool.ntp.org version 4
+
+##
+## X.509 certificates configuration
+##
+#
+# Certificate name system-self-signed, ID a4ba6a94209130c761f5f08eb05af34cc2a8cd73
+# (public-cert config omitted since private-key config is hidden)
+
+##
+## Persistent prefix mode setting
+##
+cli default prefix-modes enable
