@@ -1,0 +1,89 @@
+# interfaces(5) file used by ifup(8) and ifdown(8)
+auto lo
+iface lo inet loopback
+
+### SR-IOV VF MAC Address Prefix Table
+# PF: VF MAC Prefix
+#
+# QLogic 57840S
+# eno1: 22:26:2a:2e:xx:xx
+# eno2: 62:66:6a:6e:xx:xx
+# eno3: a2:a6:aa:ae:xx:xx
+# eno4: e2:e6:ea:ee:xx:xx
+#
+# Mellanox ConnectX-3
+# enp3s0: 26:2a:2e:22:xx:xx
+# enp3s0d1: 66:6a:6e:62:xx:xx
+# enp68s0: a6:aa:ae:a2:xx:xx
+# enp68s0d1: e6:ea:ee:e2:xx:xx
+#
+# Reserved for future use
+# 2a:2e:22:26:xx:xx
+# 6a:6e:62:66:xx:xx
+# aa:ae:a2:a6:xx:xx
+# ea:ee:e2:e6:xx:xx
+#
+# Reserved for future use
+# 2e:22:26:2a:xx:xx
+# 6e:62:66:6a:xx:xx
+# ae:a2:a6:aa:xx:xx
+# ee:e2:e6:ea:xx:xx
+
+auto eno1
+iface eno1 inet manual
+    post-up echo 6 > /sys/class/net/eno1/device/sriov_numvfs
+    post-up for vf in $(ip link show eno1 | awk '/vf / {printf $2" "}'); do ip link set eno1 vf $vf mac 22:26:2a:2e:02:${vf}; done
+    post-up for device in $(ls /sys/bus/pci/drivers/bnx2x | egrep -v "0000:[0-9a-f]{2}:00" | grep 0000); do echo $device > /sys/bus/pci/drivers/bnx2x/unbind; done
+
+auto br-eno1
+iface br-eno1 inet static
+    address 10.0.0.241/24
+    gateway 10.0.0.254
+    dns-nameservers 1.1.1.1 8.8.8.8
+    bridge_ports eno1
+
+auto eno2
+iface eno2 inet manual
+    post-up echo 6 > /sys/class/net/eno2/device/sriov_numvfs
+    post-up for vf in $(ip link show eno2 | awk '/vf / {printf $2" "}'); do ip link set eno2 vf $vf mac 62:66:6a:6e:02:${vf}; done
+    post-up for device in $(ls /sys/bus/pci/drivers/bnx2x | egrep -v "0000:[0-9a-f]{2}:00" | grep 0000); do echo $device > /sys/bus/pci/drivers/bnx2x/unbind; done
+
+auto br-eno2
+iface br-eno2 inet manual
+    bridge_ports eno2
+
+auto eno3
+iface eno3 inet manual
+    post-up echo 6 > /sys/class/net/eno3/device/sriov_numvfs
+    post-up for vf in $(ip link show eno3 | awk '/vf / {printf $2" "}'); do ip link set eno3 vf $vf mac a2:a6:aa:ae:02:${vf}; done
+    post-up for device in $(ls /sys/bus/pci/drivers/bnx2x | egrep -v "0000:[0-9a-f]{2}:00" | grep 0000); do echo $device > /sys/bus/pci/drivers/bnx2x/unbind; done
+
+auto br-eno3
+iface br-eno3 inet manual
+    bridge_ports eno3
+
+auto eno4
+iface eno4 inet manual
+    post-up echo 6 > /sys/class/net/eno4/device/sriov_numvfs
+    post-up for vf in $(ip link show eno4 | awk '/vf / {printf $2" "}'); do ip link set eno4 vf $vf mac e2:e6:ea:ee:02:${vf}; done
+    post-up for device in $(ls /sys/bus/pci/drivers/bnx2x | egrep -v "0000:[0-9a-f]{2}:00" | grep 0000); do echo $device > /sys/bus/pci/drivers/bnx2x/unbind; done
+
+auto br-eno4
+iface br-eno4 inet manual
+    bridge_ports eno4
+
+auto enp3s0
+iface enp3s0 inet manual
+    post-up for vf in $(ip link show enp3s0 | awk '/vf / {printf $2" "}'); do ip link set enp3s0 vf $vf mac 26:2a:2e:22:02:${vf}; done
+
+auto enp3s0d1
+iface enp3s0d1 inet manual
+    post-up for vf in $(ip link show enp3s0d1 | awk '/vf / {printf $2" "}'); do ip link set enp3s0d1 vf $vf mac 66:6a:6e:62:02:${vf}; done
+
+auto enp68s0
+iface enp68s0 inet manual
+    post-up for vf in $(ip link show enp68s0 | awk '/vf / {printf $2" "}'); do ip link set enp68s0 vf $vf mac a6:aa:ae:a2:02:${vf}; done
+
+auto enp68s0d1
+iface enp68s0d1 inet manual
+    post-up for vf in $(ip link show enp68s0d1 | awk '/vf / {printf $2" "}'); do ip link set enp68s0d1 vf $vf mac e6:ea:ee:e2:02:${vf}; done
