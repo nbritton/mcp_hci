@@ -1,6 +1,6 @@
 <domain type='kvm'>
   <name>kvm02.exabit.io</name>
-  <uuid>55c36f81-025d-4532-8c49-fa245441a14a</uuid>
+  <uuid>0303d10c-633e-4e80-b455-cbbfdf7b5a5f</uuid>
   <memory unit='KiB'>134217728</memory>
   <currentMemory unit='KiB'>134217728</currentMemory>
   <vcpu placement='static' cpuset='2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62'>16</vcpu>
@@ -37,13 +37,13 @@
       <source file='/var/lib/libvirt/images/kvm02.exabit.io.qcow2'/>
       <target dev='vda' bus='virtio'/>
       <boot order='1'/>
-      <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
+      <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
     </disk>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
       <source file='/var/lib/libvirt/images/kvm02.exabit.io.images.qcow2'/>
       <target dev='vdb' bus='virtio'/>
-      <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
+      <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </disk>
     <controller type='usb' index='0' model='ich9-ehci1'>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x1d' function='0x7'/>
@@ -99,13 +99,8 @@
       <target chassis='7' port='0x16'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x6'/>
     </controller>
-    <controller type='pci' index='8' model='pcie-root-port'>
-      <model name='pcie-root-port'/>
-      <target chassis='8' port='0x17'/>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x7'/>
-    </controller>
     <controller type='virtio-serial' index='0'>
-      <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
+      <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </controller>
     <serial type='pty'>
       <target type='isa-serial' port='0'>
@@ -133,13 +128,13 @@
       <source>
         <address domain='0x0000' bus='0x01' slot='0x01' function='0x1'/>
       </source>
-      <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
+      <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </hostdev>
     <hostdev mode='subsystem' type='pci' managed='yes'>
       <source>
         <address domain='0x0000' bus='0x01' slot='0x03' function='0x1'/>
       </source>
-      <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
+      <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
     </hostdev>
     <redirdev bus='usb' type='spicevmc'>
       <address type='usb' bus='0' port='1'/>
@@ -148,7 +143,7 @@
       <address type='usb' bus='0' port='2'/>
     </redirdev>
     <memballoon model='virtio'>
-      <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
+      <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
     </memballoon>
   </devices>
 </domain>
