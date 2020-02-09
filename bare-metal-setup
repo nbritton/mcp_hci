@@ -40,6 +40,20 @@ name="kvm01.exabit.io"; virt-install --machine q35 --import --name ${name} --mem
 name="kvm02.exabit.io"; virt-install --machine q35 --import --name ${name} --memory 131072 --vcpus 16 --cpu host-model-only --video qxl --sound none --disk /var/lib/libvirt/images/${name}.qcow2 --disk /var/lib/libvirt/images/${name}.images.qcow2 --boot hd --os-variant ubuntu16.04 --autostart  --noautoconsole --network none --cpuset=2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62 --numatune=2,mode=preferred --host-device pci_0000_01_01_1 --host-device pci_0000_01_03_1
 name="kvm03.exabit.io"; virt-install --machine q35 --import --name ${name} --memory 131072 --vcpus 16 --cpu host-model-only --video qxl --sound none --disk /var/lib/libvirt/images/${name}.qcow2 --disk /var/lib/libvirt/images/${name}.images.qcow2 --boot hd --os-variant ubuntu16.04 --autostart  --noautoconsole --network none --cpuset=2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62 --numatune=2,mode=preferred --host-device pci_0000_01_01_1 --host-device pci_0000_01_03_1
 
+# Find NUMA node of PERC H710 Storage Controller
+cat /sys/devices/pci0000:00/0000:00:$(lspci | grep MegaRAID | awk -F: '{printf $1}')*/numa_node;
+
+# Set to NUMA node which has the RAID storage controller
+name="osd01.exabit.io"; virt-install --machine q35 --import --name ${name} --memory 32768 --vcpus 16 --cpu host-model-only --video qxl --sound none --disk /var/lib/libvirt/images/${name}.qcow2 --boot hd --os-variant ubuntu16.04 --autostart  --noautoconsole --network none --cpuset=0,4,8,12,16,20,24,28,32,36,40,44,48,52,56,60 --numatune=0,mode=preferred --host-device pci_0000_01_01_2 --host-device pci_0000_01_02_2 --host-device pci_0000_03_00_2 --host-device pci_0000_03_01_2
+name="osd02.exabit.io"; virt-install --machine q35 --import --name ${name} --memory 32768 --vcpus 16 --cpu host-model-only --video qxl --sound none --disk /var/lib/libvirt/images/${name}.qcow2 --boot hd --os-variant ubuntu16.04 --autostart  --noautoconsole --network none --cpuset=0,4,8,12,16,20,24,28,32,36,40,44,48,52,56,60 --numatune=0,mode=preferred --host-device pci_0000_01_01_2 --host-device pci_0000_01_03_2 --host-device pci_0000_03_00_2 --host-device pci_0000_03_01_2
+name="osd03.exabit.io"; virt-install --machine q35 --import --name ${name} --memory 32768 --vcpus 16 --cpu host-model-only --video qxl --sound none --disk /var/lib/libvirt/images/${name}.qcow2 --boot hd --os-variant ubuntu16.04 --autostart  --noautoconsole --network none --cpuset=0,4,8,12,16,20,24,28,32,36,40,44,48,52,56,60 --numatune=0,mode=preferred --host-device pci_0000_01_01_2 --host-device pci_0000_01_03_2 --host-device pci_0000_03_00_2 --host-device pci_0000_03_01_2
+
+# Create ceph backing devices, qcow2 is on average faster then zvols. 35TB raw, 30TB useable, thinly over-provisioned to 48TiB thanks to ZFS on-the-fly compression, compression factor 1.75x
+# OSD disks are 1.5 * CPU cores. 8 Real cores = 16 threads = 12 OSD disk.
+for i in $(seq -w 1 12); do qemu-img create -f qcow2 /ceph/ceph${i}.qcow2 4T; done
+
+name="osd01.exabit.io";
+for device in {b..m}; do echo "$device"; done | awk '{printf $1" "; printf ("%02d\n",NR)}' | while read device number; do virsh attach-disk ${name} --source /ceph/ceph${number}.qcow2 --persistent --targetbus virtio --subdriver qcow2 --target vd${device}; done
 
 # 1,000 Hz low latency kernel for better interrupt servicing
 apt -y install --install-recommends linux-lowlatency-hwe-16.04;
@@ -51,3 +65,4 @@ mlxconfig -d /dev/mst/mt4099_pciconf0 set SRIOV_EN=1 NUM_OF_VFS=26 LINK_TYPE_P1=
 mlxconfig -d /dev/mst/mt4099_pciconf1 set SRIOV_EN=1 NUM_OF_VFS=26 LINK_TYPE_P1=2 LINK_TYPE_P2=2;
 echo "options mlx4_core num_vfs=13 probe_vf=0 port_type_array=2,2 msi_x=1 mlx4_en_only_mode=1" > /etc/modprobe.d/mlx4_core.conf;
 update-initramfs -u;
+
