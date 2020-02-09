@@ -1,4 +1,4 @@
-apt -y install libvirt-bin qemu-system-x86 qemu-kvm;
+apt -y install bridge-utils cpu-checker libguestfs-rescue libguestfs-tools linux-tools-common linux-tools-generic numactl numad qemu-kvm qemu-system-common qemu-system-x86 qemu-utils virtinst libvirt-bin
 
 parted --script --align optimal /dev/vdb mklabel gpt mkpart primary xfs 0% 100% name 1 images;
 mkfs.xfs /dev/vdb1;
