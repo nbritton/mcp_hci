@@ -41,3 +41,4 @@ apt -y remove linux-*-4.15.0-*-generic;
 update-grub;
 update-initramfs -u -k all;
 
+echo "options mlx4_core num_vfs=14 probe_vf=0 port_type_array=2,2 msi_x=1 mlx4_en_only_mode=1" > /etc/modprobe.d/mlx4_core.conf
