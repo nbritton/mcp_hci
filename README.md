@@ -1,7 +1,7 @@
 # mcp-hci
-Mirantis Cloud Platform Hyper Converged Infrastructure
+Mirantis Cloud Platform Hyper-Converged Infrastructure
 
-MCP hyper-converged reference archtecture standard.
+MCP hyper-converged reference architecture standard.
 
 Features:
 - Full HA implmentation of MCP 2019.2.7 + OpenStack Queens
