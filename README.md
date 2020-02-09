@@ -1,4 +1,4 @@
-# mcp-hci
+# MCP-HCI
 Mirantis Cloud Platform Hyper-Converged Infrastructure
 
 MCP hyper-converged reference architecture standard.
