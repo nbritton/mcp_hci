@@ -4,3 +4,10 @@ parted --script --align optimal /dev/vdb mklabel gpt mkpart primary xfs 0% 100% 
 mkfs.xfs /dev/vdb1;
 echo -e "/dev/vdb1\t/var/lib/libvirt/images\txfs\tdefaults\t0 0" >> /etc/fstab;
 mount -a;
+
+# Enable virsh console access
+systemctl enable serial-getty@ttyS0.service;
+systemctl start serial-getty@ttyS0.service;
+sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="/GRUB_CMDLINE_LINUX_DEFAULT="console=tty0 console=ttyS0 /' /etc/default/grub;
+sed -i 's/#GRUB_TERMINAL=console/GRUB_TERMINAL="serial console"/' /etc/default/grub;
+update-grub;

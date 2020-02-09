@@ -35,6 +35,12 @@ qemu-img create -f qcow2 /var/lib/libvirt/images/kvm01.exabit.io.images.qcow2 5T
 qemu-img create -f qcow2 /var/lib/libvirt/images/kvm02.exabit.io.images.qcow2 5T;
 qemu-img create -f qcow2 /var/lib/libvirt/images/kvm03.exabit.io.images.qcow2 5T;
 
+# Change --host-device to the correct device, on a Dell R820, R830, and/or R840 the kvm node should be pinned to NUMA domain 2 or 3, as 0 and 1 are reserved for SR-IOV and Ceph due to CPU sockets 3 and 4 having no direct physical connection to the PCIe slots.
+name="kvm01.exabit.io"; virt-install --machine q35 --import --name ${name} --memory 131072 --vcpus 16 --cpu host-model-only --video qxl --sound none --disk /var/lib/libvirt/images/${name}.qcow2 --disk /var/lib/libvirt/images/${name}.images.qcow2,boot_order=none --boot hd --os-variant ubuntu16.04 --autostart  --noautoconsole --network none --cpuset=2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62 --numatune=2,mode=preferred --host-device pci_0000_01_01_1 --host-device pci_0000_01_02_1
+name="kvm02.exabit.io"; virt-install --machine q35 --import --name ${name} --memory 131072 --vcpus 16 --cpu host-model-only --video qxl --sound none --disk /var/lib/libvirt/images/${name}.qcow2 --disk /var/lib/libvirt/images/${name}.images.qcow2 --boot hd --os-variant ubuntu16.04 --autostart  --noautoconsole --network none --cpuset=2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62 --numatune=2,mode=preferred --host-device pci_0000_01_01_1 --host-device pci_0000_01_03_1
+name="kvm03.exabit.io"; virt-install --machine q35 --import --name ${name} --memory 131072 --vcpus 16 --cpu host-model-only --video qxl --sound none --disk /var/lib/libvirt/images/${name}.qcow2 --disk /var/lib/libvirt/images/${name}.images.qcow2 --boot hd --os-variant ubuntu16.04 --autostart  --noautoconsole --network none --cpuset=2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62 --numatune=2,mode=preferred --host-device pci_0000_01_01_1 --host-device pci_0000_01_03_1
+
+
 # 1,000 Hz low latency kernel for better interrupt servicing
 apt -y install --install-recommends linux-lowlatency-hwe-16.04;
 apt -y remove linux-*-4.15.0-*-generic;
