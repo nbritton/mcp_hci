@@ -29,6 +29,7 @@ Reference hardware:
   - 2x Samsung 850 Pro 256GB SATA 2.5" SSD
   - 7x Dell Seagate ST600MM0006 600GB SAS 10k RPM 2.5" HDD
   - 7x Seagate Barracuda ST5000LM000 5TB SATA 5.4k RPM 2.5" HDD
+  - 2x 1100 Watt PSU
 - 1x Mellanox SX6018 18 port 40 GbE Switch
 - 1x Mellanox SX6036 36 port 40 GbE Switch
 - 1x Dell R620 4-bay:
@@ -38,6 +39,8 @@ Reference hardware:
   - 1x PERC H710
   - 1x Dell Intel X520 DP 10 GbE + i350 DP 1 GbE rDNC, DP/N: C63DV
   - 1x Mellanox ConnectX-3 VPI Single Port, MCX353A-FCBT
+  - 2x 450 Watt PSU
 - 1x AT&T Fiber + Arris BGW210-700 Residential Gateway + Public Static IP Block
+- 2x APC SMX2000RMLV2UNC 2000VA 120V Smart-UPS
    
     
