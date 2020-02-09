@@ -41,4 +41,6 @@ apt -y remove linux-*-4.15.0-*-generic;
 update-grub;
 update-initramfs -u -k all;
 
+mlxconfig -d /dev/mst/mt4099_pciconf0 set SRIOV_EN=1 NUM_OF_VFS=28 LINK_TYPE_P1=2 LINK_TYPE_P2=2;
+mlxconfig -d /dev/mst/mt4099_pciconf1 set SRIOV_EN=1 NUM_OF_VFS=28 LINK_TYPE_P1=2 LINK_TYPE_P2=2;
 echo "options mlx4_core num_vfs=14 probe_vf=0 port_type_array=2,2 msi_x=1 mlx4_en_only_mode=1" > /etc/modprobe.d/mlx4_core.conf
