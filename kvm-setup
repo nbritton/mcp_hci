@@ -1,0 +1,6 @@
+apt -y install libvirt-bin qemu-system-x86 qemu-kvm;
+
+parted --script --align optimal /dev/vdb mklabel gpt mkpart primary xfs 0% 100% name 1 images;
+mkfs.xfs /dev/vdb1;
+echo -e "/dev/vdb1\t/var/lib/libvirt/images\txfs\tdefaults\t0 0" >> /etc/fstab;
+mount -a;
