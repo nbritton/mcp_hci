@@ -4,7 +4,7 @@ Mirantis Cloud Platform Hyper-Converged Infrastructure
 MCP hyper-converged reference architecture standard.
 
 Features:
-- Full HA implmentation of MCP 2019.2.7 + OpenStack Queens
+- Full HA implementation of MCP 2019.2.7 + OpenStack Queens
 - 40 GbE SR-IOV + 10 GbE OVS Guest Networking
 - 40 GbE Ceph Cluster
 - Wireguard VPN
