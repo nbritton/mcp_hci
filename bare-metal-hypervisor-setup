@@ -28,3 +28,5 @@ zfs create data/images;
 zfs set mountpoint=/var/lib/libvirt/images data/images;
 
 qemu-img create -f qcow2 /var/lib/libvirt/images/kvm01.exabit.io.images.qcow2 5T;
+qemu-img create -f qcow2 /var/lib/libvirt/images/kvm02.exabit.io.images.qcow2 5T;
+qemu-img create -f qcow2 /var/lib/libvirt/images/kvm03.exabit.io.images.qcow2 5T;
