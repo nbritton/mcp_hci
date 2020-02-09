@@ -19,7 +19,7 @@ Provides:
 - 3x RDP remote desktop endpoints
 - 2x Wireguard VPN HA service
     
-Target hardware:
+Reference hardware:
 - 3x Dell R820 16-bay:
   - 4x Intel Xeon E5-4640
   - 32x 16GB DIMMs
