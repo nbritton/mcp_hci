@@ -22,7 +22,7 @@ MCP hyper-converged reference architecture standard.
 ## Conceptual diagram:
 ![mcp-hci-diagram](https://user-images.githubusercontent.com/22720196/74109511-b46d9e00-4b49-11ea-8b95-1cda30ae118e.png)
 
-![mcp-hci-cmp-screenshot](https://user-images.githubusercontent.com/22720196/74121973-477cf700-4b8f-11ea-96d0-95d18a4cf744.png)
+![mcp-hci-cmp-screenshot](https://user-images.githubusercontent.com/22720196/74163427-fc430280-4be7-11ea-8c09-cecfbcddc63a.png)
 
 ## Reference hardware:
 - 3x Dell R820 16-bay:
