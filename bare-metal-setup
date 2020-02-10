@@ -55,6 +55,11 @@ for i in $(seq -w 1 12); do qemu-img create -f qcow2 /ceph/ceph${i}.qcow2 4T; do
 name="osd01.exabit.io";
 for device in {b..m}; do echo "$device"; done | awk '{printf $1" "; printf ("%02d\n",NR)}' | while read device number; do virsh attach-disk ${name} --source /ceph/ceph${number}.qcow2 --persistent --targetbus virtio --subdriver qcow2 --target vd${device}; done
 
+# Setup gtw nodes
+name="gtw01.exabit.io"; virt-install --machine q35 --import --name ${name} --memory 8192 --vcpus 4 --cpu host-model-only --video qxl --sound none --disk /var/lib/libvirt/images/${name}.qcow2 --boot hd --os-variant ubuntu16.04 --autostart  --noautoconsole --network none --cpuset=3,7,11,15,19,23,27,31,35,39,43,47,51,55,59,63 --numatune=3,mode=preferred --host-device pci_0000_01_01_3 --host-device pci_0000_01_02_3 --host-device pci_0000_01_09_3 --host-device pci_0000_01_0a_3
+name="gtw02.exabit.io"; virt-install --machine q35 --import --name ${name} --memory 8192 --vcpus 4 --cpu host-model-only --video qxl --sound none --disk /var/lib/libvirt/images/${name}.qcow2 --boot hd --os-variant ubuntu16.04 --autostart  --noautoconsole --network none --cpuset=3,7,11,15,19,23,27,31,35,39,43,47,51,55,59,63 --numatune=3,mode=preferred --host-device pci_0000_01_01_3 --host-device pci_0000_01_03_3 --host-device pci_0000_01_09_3 --host-device pci_0000_01_0b_3
+name="gtw03.exabit.io"; virt-install --machine q35 --import --name ${name} --memory 8192 --vcpus 4 --cpu host-model-only --video qxl --sound none --disk /var/lib/libvirt/images/${name}.qcow2 --boot hd --os-variant ubuntu16.04 --autostart  --noautoconsole --network none --cpuset=3,7,11,15,19,23,27,31,35,39,43,47,51,55,59,63 --numatune=3,mode=preferred --host-device pci_0000_01_01_3 --host-device pci_0000_01_03_3 --host-device pci_0000_01_09_3 --host-device pci_0000_01_0b_3
+
 # 1,000 Hz low latency kernel for better interrupt servicing
 apt -y install --install-recommends linux-lowlatency-hwe-16.04;
 apt -y remove linux-*-4.15.0-*-generic;
