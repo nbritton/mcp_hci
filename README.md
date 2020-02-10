@@ -3,13 +3,13 @@ Mirantis Cloud Platform Hyper-Converged Infrastructure
 
 MCP hyper-converged reference architecture standard.
 
-Features:
+## Features:
 - Full HA implementation of MCP 2019.2.7 + OpenStack Queens
 - 40 GbE SR-IOV + 10 GbE OVS Guest Networking
 - 40 GbE Ceph Cluster
 - Wireguard VPN
 
-Provides:
+## Provides:
 - 3x Compute nodes
 - 3x KVM control plane nodes
 - 3x Ceph OSD nodes
@@ -18,8 +18,11 @@ Provides:
 - 1x OPNsense firewall node
 - 3x RDP remote desktop endpoints
 - 2x Wireguard VPN HA service
-    
-Reference hardware:
+
+## Conceptual diagram:
+![mcp-hci-diagram](https://user-images.githubusercontent.com/22720196/74109511-b46d9e00-4b49-11ea-8b95-1cda30ae118e.png)
+
+## Reference hardware:
 - 3x Dell R820 16-bay:
   - 4x Intel Xeon E5-4640
   - 32x 16GB DIMMs
