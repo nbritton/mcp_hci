@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Forked and addapted from https://github.com/aus/pfatt
+# Forked and addapted from https://github.com/MonkWho/pfatt
 # This fork explicitly targets OPNsense
 
 # Installation instructions:
